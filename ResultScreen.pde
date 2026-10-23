@@ -132,9 +132,9 @@ class ResultScreen {
     textAlign(LEFT, TOP);
 
     statCard(48, "PERFECT", str(resultPerfect), color(255, 220, 95));
-statCard(228, "GREAT", str(resultGreat), color(240, 115, 210));
-statCard(408, "GOOD", str(resultGood), color(120, 220, 155));
-statCard(588, "MISS", str(resultMiss), color(250, 110, 100));
+    statCard(228, "GREAT", str(resultGreat), color(240, 115, 210));
+    statCard(408, "GOOD", str(resultGood), color(120, 220, 155));
+    statCard(588, "MISS", str(resultMiss), color(250, 110, 100));
 
     drawButton(155, 501, 225, 56, "RESTART", true);
     drawButton(420, 501, 225, 56, "MAIN MENU", false);
@@ -186,5 +186,26 @@ statCard(588, "MISS", str(resultMiss), color(250, 110, 100));
     textAlign(CENTER, CENTER);
     textSize(19);
     text(label, x + w / 2, y + h / 2);
+  }
+
+  void handleClick() {
+
+    if (mouseX >= 155 && mouseX <= 380 &&
+        mouseY >= 501 && mouseY <= 557) {
+
+      println("Restarting Game");
+
+      LoadLevel(selectedSong);
+      return;
+    }
+
+    if (mouseX >= 420 && mouseX <= 645 &&
+        mouseY >= 501 && mouseY <= 557) {
+
+      println("Returning to Main Menu");
+
+      ReturnToMainMenu();
+      return;
+    }
   }
 }

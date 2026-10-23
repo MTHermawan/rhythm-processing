@@ -60,6 +60,7 @@ int lastPlayedFrame = 0;
 String menuState = "mainmenu";
 String mainMenuState = "root";
 boolean songEnded = false;
+boolean songStarted = false;
 boolean[] gameInput = new boolean[4] ;
 
 ChartManager chartManager = new ChartManager();

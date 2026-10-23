@@ -90,8 +90,20 @@ class MenuScreen {
   } 
 }
 
+
 void mouseClicked()
 {
+  if (mouseButton != LEFT) return;
+
+  if (menuState.equalsIgnoreCase("result")) {
+    resultScreen.handleClick();
+    return;
+  }
+
+  if (!menuState.equalsIgnoreCase("mainmenu")) {
+    return;
+  }
+
   if (mouseButton == LEFT)
   {
     if (mainMenuState.compareToIgnoreCase("root") == 0)
