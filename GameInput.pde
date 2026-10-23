@@ -1,10 +1,4 @@
 void keyPressed() {
-  if (menuState.equalsIgnoreCase("level") && (key == 'r' || key == 'R')) {
-    song.stop();
-    menuState = "result";
-    return;
-  }
-  
   if (menuState.compareToIgnoreCase("level") == 0) {
     // Judgment Handler / Hit
     int lineIndex = -1;

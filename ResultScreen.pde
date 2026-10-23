@@ -3,6 +3,13 @@ class ResultScreen {
 
   PImage songCover;
 
+  int animationStartMillis = -1;
+
+  void startAnimation() {
+    animationStartMillis = millis();
+  }
+
+
   void loadAssets() {
     songCover = loadImage(songPath + "bad_apple/cover.jpg");
   }
@@ -10,7 +17,40 @@ class ResultScreen {
   void display() {
     pushStyle();
 
+    if (animationStartMillis < 0) {
+      startAnimation();
+    }
+
+    float elapsed = (millis() - animationStartMillis) / 1000.0;
+
+    float scoreProgress = constrain(
+      (elapsed - 0.2) / 1.2,
+      0,
+      1
+    );
+
+    float scoreEase = 1 - pow(1 - scoreProgress, 3);
+    
     background(12, 16, 27);
+
+    pushMatrix();
+
+    translate(720, 84);
+
+    stroke(100, 180, 235, 190);
+    strokeWeight(4);
+
+    line(0, -19, 0, 15);
+
+    noFill();
+    bezier(0, -19, 10, -20, 15, -25, 18, -20);
+
+    noStroke();
+    fill(100, 180, 235);
+    ellipse(-8, 15, 16, 10);
+
+    popMatrix();
+
     rectMode(CORNER);
     imageMode(CORNER);
     textAlign(LEFT, TOP);
@@ -22,6 +62,22 @@ class ResultScreen {
       fill(50, 110, 160, 35);
       rect(12 + i * 36, height - barHeight - 10, 15, barHeight, 3);
     }
+
+    noFill();
+    stroke(65, 145, 212, 80);
+    strokeWeight(2);
+
+    float waveOffset =
+      sin(frameCount * 0.04) * 7;
+
+    bezier(
+      48, 486,
+      260, 479 + waveOffset,
+      535, 493 - waveOffset,
+      752, 486
+    );
+
+    noStroke();
     
     fill(110, 190, 245);
     textSize(14);
@@ -93,7 +149,7 @@ class ResultScreen {
 
     fill(255);
     textSize(40);
-    text(nf(displayScore, 7), 290, 225);
+    text(nf(round(displayScore * scoreEase), 7), 290, 225);
 
     stroke(52, 70, 95);
     line(290, 302, 596, 302);
@@ -105,16 +161,15 @@ class ResultScreen {
 
     fill(255);
     textSize(22);
-    text(nf(resultAccuracy, 0, 2) + "%", 290, 337);
+    text(nf(resultAccuracy * scoreEase, 0, 2) + "%", 290, 337);
 
-    // Max combo
     fill(165, 180, 200);
     textSize(12);
     text("MAX COMBO", 475, 319);
 
     fill(255);
     textSize(22);
-    text(maxCombo, 475, 337);
+    text(round(maxCombo * scoreEase), 475, 337);
 
     fill(28, 53, 79);
     rect(615, 184, 116, 164, 13);
@@ -130,11 +185,11 @@ class ResultScreen {
     text(resultRank, 673, 275);
 
     textAlign(LEFT, TOP);
-
-    statCard(48, "PERFECT", str(resultPerfect), color(255, 220, 95));
-    statCard(228, "GREAT", str(resultGreat), color(240, 115, 210));
-    statCard(408, "GOOD", str(resultGood), color(120, 220, 155));
-    statCard(588, "MISS", str(resultMiss), color(250, 110, 100));
+    
+    statCard(48, "PERFECT", str(round(resultPerfect * scoreEase)), color(255, 220, 95));
+    statCard(228, "GREAT", str(round(resultGreat * scoreEase)), color(240, 115, 210));
+    statCard(408, "GOOD", str(round(resultGood * scoreEase)), color(120, 220, 155));
+    statCard(588, "MISS", str(round(resultMiss * scoreEase)), color(250, 110, 100));
 
     drawButton(155, 501, 225, 56, "RESTART", true);
     drawButton(420, 501, 225, 56, "MAIN MENU", false);

@@ -238,6 +238,8 @@ void LevelManager() {
     println("Final Score: " + totalScore);
     println("Max Combo: " + maxCombo);
 
+    resultScreen.startAnimation();
+  
     menuState = "result";
   }
 }
