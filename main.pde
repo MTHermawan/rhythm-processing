@@ -65,6 +65,7 @@ boolean[] gameInput = new boolean[4] ;
 ChartManager chartManager = new ChartManager();
 MenuScreen menuScreen = new MenuScreen();
 JudgmentManager judgmentManager = new JudgmentManager();
+ResultScreen resultScreen = new ResultScreen();
 
 void setup()
 {
@@ -73,6 +74,7 @@ void setup()
   song = new SoundFile(this, songPath + "bad_apple" + "/bgm.mp3");
   guideSound = new SoundFile(this, sfxPath + "clap-lowerdb.mp3");
   background(0);
+  resultScreen.loadAssets();
 
   for (int i=0; i < gameInput.length; i++) {
     gameInput[i] = false;
@@ -90,12 +92,19 @@ void draw()
   if (menuState.compareToIgnoreCase("mainmenu") == 0)
   {
     menuScreen.MainMenu();
-  } else if (menuState.compareToIgnoreCase("level") == 0)
+  }
+  else if (menuState.compareToIgnoreCase("level") == 0)
   {
     LevelManager();
   }
+  else if (menuState.compareToIgnoreCase("result") == 0)
+  {
+    resultScreen.display();
+  }
 
+  if (menuState.equalsIgnoreCase("level")) {
   MouseCoordinate();
+  }
 
   totalScore = (currentJudgment[0] * perfectScore) + (currentJudgment[1] * greatScore) + (currentJudgment[2] * goodScore);
   totalCombo = currentJudgment[0] + currentJudgment[1] + currentJudgment[2];
