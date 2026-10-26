@@ -5,6 +5,7 @@ String selectedSong = "bad_apple";
 float songStartTime = 0;
 float songTime = 0;
 float songBpm = 0;
+float songOffset = 0; 
 float musicVolume = 60;
 SoundFile song;
 String songPath = "assets/songs/";

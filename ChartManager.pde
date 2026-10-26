@@ -7,6 +7,7 @@ class ChartManager {
     ResetChart();
     if (songName.compareToIgnoreCase("bad_apple") == 0) {
       songBpm = 138;
+      songOffset = 7; 
       float beatTime = 60/songBpm;
   
       // 1

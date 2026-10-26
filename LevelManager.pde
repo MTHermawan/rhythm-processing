@@ -84,6 +84,40 @@ void ReturnToMainMenu() {
   println("Successfully returned to Main Menu");
 }
 
+void DrawBeatLines(float gap, float judgmentMargin, float chartSpeed) {
+  if (songBpm <= 0) return;
+
+  float pxPerSec  = chartSpeed * 100;           // sama dengan rumus posisi not
+  float beatTime  = 60.0 / songBpm;
+  float firstTime = songOffset + chartManager.soundOffset;  // beat ke-0 (sudah termasuk offset not)
+
+  float leftX  = -150 - (gap / 2);
+  float rightX = -150 + (gap * (gameInput.length - 1)) + (gap / 2);
+
+  // Rentang waktu yang terlihat di layar (y = 0 sampai y = -height)
+  float tMin = songDuration + (judgmentMargin / pxPerSec);
+  float tMax = songDuration + ((judgmentMargin + height) / pxPerSec);
+
+  int firstBeat = max(0, floor((tMin - firstTime) / beatTime));
+  int lastBeat  = ceil((tMax - firstTime) / beatTime);
+
+  for (int b = firstBeat; b <= lastBeat; b++) {
+    float t = firstTime + (b * beatTime);
+    float y = judgmentMargin - (pxPerSec * (t - songDuration));
+
+    if (b % 4 == 0) {          // awal birama: lebih tebal dan terang
+      stroke(255, 255 * 0.45);
+      strokeWeight(2);
+    } else {                   // beat biasa
+      stroke(255, 255 * 0.15);
+      strokeWeight(1);
+    }
+    line(leftX, y, rightX, y);
+  }
+  noStroke();
+}
+
+
 void LevelManager() {
   background(0);
 
@@ -170,6 +204,8 @@ void LevelManager() {
     }
   }
   noStroke();
+  
+  DrawBeatLines(gap, judgmentMargin, 10);  
 
   // Chart
   float chartSpeed = 10;
