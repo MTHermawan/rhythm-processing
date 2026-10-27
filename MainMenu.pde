@@ -86,6 +86,8 @@ class MenuScreen {
       text("PLAY", 0, 126);
   
       popMatrix();
+    } else if (mainMenuState.compareToIgnoreCase("settings") == 0) {
+      settingsScreen.display();
     }
   } 
 }
@@ -116,7 +118,7 @@ void mouseClicked()
 
       // Settings
       if (mouseX >= 348 && mouseX <= 454 && mouseY >= 300 && mouseY <= 318) {
-        //
+        mainMenuState = "settings";
       }
     } else if (mainMenuState.compareToIgnoreCase("selectsong") == 0) {
       // Back
@@ -127,6 +129,8 @@ void mouseClicked()
       if (mouseX >= 304 && mouseX <= 494 && mouseY >= 412 && mouseY <= 446) {
         LoadLevel("bad_apple");
       }
+    } else if (mainMenuState.compareToIgnoreCase("settings") == 0) {
+      settingsScreen.handleClick();
     }
   }
 }

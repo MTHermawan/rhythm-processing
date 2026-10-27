@@ -7,8 +7,7 @@ class ChartManager {
     ResetChart();
     if (songName.compareToIgnoreCase("bad_apple") == 0) {
       songBpm = 138;
-      songOffset = 7; 
-      float beatTime = 60/songBpm;
+      songOffset = 7;   // beat ke-0 pola loop di bawah (detik)
   
       // 1
       AddChart(0, 1.35, 0.9); // 2A
@@ -72,27 +71,15 @@ class ChartManager {
       AddChart(3, 6.55, 0);
   
   
-      for (int i=0; i < 470; i++)
+      for (int i = 0; i < 470; i += 2)
       {
-        if (i % 2 == 0) {
-          if (((i + 4) / 2) % 4 == 2) {
-            AddChart(0, 7 + (beatTime * i), beatTime);
-            AddChart(2, 7 + (beatTime * i), 0);
-            AddChart(2, 7 + (beatTime * (i+1)), 0);
-          } else if (((i + 4) / 2) % 4 == 3) {
-            AddChart(1, 7 + (beatTime * i), beatTime);
-            AddChart(3, 7 + (beatTime * i), 0);
-            AddChart(3, 7 + (beatTime * (i+1)), 0);
-          } else if (((i + 4) / 2) % 4 == 0) {
-            AddChart(2, 7 + (beatTime * i), beatTime);
-            AddChart(0, 7 + (beatTime * i), 0);
-            AddChart(0, 7 + (beatTime * (i+1)), 0);
-          } else {
-            AddChart(3, 7 + (beatTime * i), beatTime);
-            AddChart(1, 7 + (beatTime * i), 0);
-            AddChart(1, 7 + (beatTime * (i+1)), 0);
-          }
-        }
+        int phase = ((i + 4) / 2) % 4;
+        int a = (phase == 2) ? 0 : (phase == 3) ? 1 : (phase == 0) ? 2 : 3;
+        int b = (a + 2) % 4;
+
+        AddBeat(a, i, 1);       // hold 1 beat
+        AddBeat(b, i, 0);
+        AddBeat(b, i + 1, 0);
       }
     }
   
@@ -141,10 +128,26 @@ class ChartManager {
   }
   
   float soundOffset = 0.165;
+
+  // soundOffset (tetap) + Music Offset dari Settings (ms -> detik)
+  float TotalOffset() {
+    return soundOffset + (musicOffsetMs / 1000.0);
+  }
+
+  // Beat -> detik (tanpa offset, offset ditambahkan di AddChart)
+  float BeatToTime(float beat) {
+    return songOffset + beat * (60.0 / songBpm);
+  }
+
+  // Tulis not dalam satuan beat (bisa pecahan), hold juga dalam beat
+  void AddBeat(int lineIndex, float beat, float holdBeats) {
+    AddChart(lineIndex, BeatToTime(beat), holdBeats * (60.0 / songBpm));
+  }
+
   void AddChart(int lineIndex, float judgmentTime, float holdDuration) {
     charts[chartSize] = new RhythmNote(
       lineIndex,
-      judgmentTime + soundOffset,
+      judgmentTime + TotalOffset(),
       holdDuration
     );
     chartSize++;

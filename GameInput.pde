@@ -1,19 +1,9 @@
 void keyPressed() {
+  if (HandleRebindKey()) return;
+
   if (menuState.compareToIgnoreCase("level") == 0) {
     // Judgment Handler / Hit
-    int lineIndex = -1;
-    if (key == 'd' || key == 'D') {
-      lineIndex = 0;
-    }
-    if (key == 'f' || key == 'F') {
-      lineIndex = 1;
-    }
-    if (key == 'j' || key == 'J') {
-      lineIndex = 2;
-    }
-    if (key == 'k' || key == 'K') {
-      lineIndex = 3;
-    }
+    int lineIndex = LaneFromKey(key);
 
     if (lineIndex >= 0) {
       if (gameInput[lineIndex]) return;
@@ -63,19 +53,7 @@ void keyPressed() {
 void keyReleased() {
   if (menuState.compareToIgnoreCase("level") == 0) {
     // Judgment Handler
-    int lineIndex = -1;
-    if (key == 'd' || key == 'D') {
-      lineIndex = 0;
-    }
-    if (key == 'f' || key == 'F') {
-      lineIndex = 1;
-    }
-    if (key == 'j' || key == 'J') {
-      lineIndex = 2;
-    }
-    if (key == 'k' || key == 'K') {
-      lineIndex = 3;
-    }
+    int lineIndex = LaneFromKey(key);
 
     if (lineIndex >= 0) {
       if (!gameInput[lineIndex]) return;

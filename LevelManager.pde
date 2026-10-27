@@ -56,6 +56,8 @@ void ResetGameplay() {
   delayedFramesSize = 0;
 
   guideTimeSize = 0;
+
+  if (guideSound != null) guideSound.amp(sfxVolume / 100);
   
   chartManager.SetupChart(selectedSong);
 }
@@ -89,7 +91,7 @@ void DrawBeatLines(float gap, float judgmentMargin, float chartSpeed) {
 
   float pxPerSec  = chartSpeed * 100;           // sama dengan rumus posisi not
   float beatTime  = 60.0 / songBpm;
-  float firstTime = songOffset + chartManager.soundOffset;  // beat ke-0 (sudah termasuk offset not)
+  float firstTime = songOffset + chartManager.TotalOffset();  // beat ke-0 (sudah termasuk offset not)
 
   float leftX  = -150 - (gap / 2);
   float rightX = -150 + (gap * (gameInput.length - 1)) + (gap / 2);
@@ -116,7 +118,6 @@ void DrawBeatLines(float gap, float judgmentMargin, float chartSpeed) {
   }
   noStroke();
 }
-
 
 void LevelManager() {
   background(0);
@@ -147,11 +148,7 @@ void LevelManager() {
   translate(width/2, height);
 
   for (int i = 0; i < gameInput.length; i++) {
-    String keyText = "";
-    if (i == 0) keyText = "D";
-    else if (i == 1) keyText = "F";
-    else if (i == 2) keyText = "J";
-    else if (i == 3) keyText = "K";
+    String keyText = KeyLabel(laneKeys[i]);
 
     // Play Area
     rectMode(CENTER);
@@ -204,11 +201,11 @@ void LevelManager() {
     }
   }
   noStroke();
-  
-  DrawBeatLines(gap, judgmentMargin, 10);  
+
+  float chartSpeed = scrollSpeed;
+  DrawBeatLines(gap, judgmentMargin, chartSpeed);
 
   // Chart
-  float chartSpeed = 10;
   for (int i=0; i < chartSize; i++) {
     if (charts[i].state == 1) continue;
     float linePos = -150 + (gap * charts[i].lane);

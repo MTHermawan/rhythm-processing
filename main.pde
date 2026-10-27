@@ -5,7 +5,7 @@ String selectedSong = "bad_apple";
 float songStartTime = 0;
 float songTime = 0;
 float songBpm = 0;
-float songOffset = 0; 
+float songOffset = 0;   // detik sampai beat ke-0
 float musicVolume = 60;
 SoundFile song;
 String songPath = "assets/songs/";
@@ -23,7 +23,7 @@ int chartSize = 0;
 float[][] guideTimes = new float[9999][2];
 int guideTimeSize = 0;
 SoundFile guideSound;
-String sfxPath = "assets/sfx";
+String sfxPath = "assets/sfx/";
 
 // Judgment
 int[] currentJudgment = new int[4];
@@ -72,6 +72,7 @@ ResultScreen resultScreen = new ResultScreen();
 void setup()
 {
   size(800, 600);
+  LoadSettings();
   startTime = millis();
   song = new SoundFile(this, songPath + "bad_apple" + "/bgm.mp3");
   guideSound = new SoundFile(this, sfxPath + "clap-lowerdb.mp3");
@@ -82,7 +83,7 @@ void setup()
     gameInput[i] = false;
   }
   
-  //guideSound.amp(20 / 100);
+  guideSound.amp(sfxVolume / 100);
   chartManager.SetupChart(selectedSong);
 }
 

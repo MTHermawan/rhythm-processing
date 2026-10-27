@@ -1,0 +1,6 @@
+musicVolume=35.0
+sfxVolume=32.0
+musicOffsetMs=0.0
+scrollSpeed=10.0
+bgDim=65.0
+keys=dfjk

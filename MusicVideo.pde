@@ -5,7 +5,6 @@ void PlayMV(String songName)
   float fps = 30.0;
   String imgFolder = "";
   float offset = 0;
-  float backgroundDim = 0.65;
   String frameNumber = "0000";
   int maxFrame = 0;
 
@@ -28,7 +27,7 @@ void PlayMV(String songName)
   if (mvFrameImg != null)
   {
     image(mvFrameImg, 0, 0, width, height);
-    fill(0, 255 * backgroundDim);
+    fill(0, 255 * (bgDim / 100.0));
     rect(0, 0, width, height);
 
     fill(255, 255, 0);
