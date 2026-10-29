@@ -1,4 +1,6 @@
-ChartManager() {
+class ChartManager {
+
+  void ChartManager() {
   }
 
   void SetupChart(String songName) {
@@ -150,3 +152,4 @@ ChartManager() {
     );
     chartSize++;
   }
+}
