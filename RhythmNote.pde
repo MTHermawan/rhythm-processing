@@ -1,16 +1,25 @@
 class RhythmNote {
-  int lane;
   float hitTime;
+  int lane;
   float holdDuration;
-  int state;
-  float heldTime;
+  
+  private int state;
+  private float heldTime;
 
-  RhythmNote(int lane, float hitTime, float holdDuration) {
-    this.lane = lane;
+  RhythmNote(float hitTime, int lane, float holdDuration) {
     this.hitTime = hitTime;
+    this.lane = lane;
     this.holdDuration = holdDuration;
     this.state = 0;
-    this.heldTime = 0;
   }
-
+  
+  public void SetState(int newState) {
+    // Info: 
+    this.state = newState;
+  }
+  
+  public void SetHeldTime(float heldTime) {
+    if (heldTime > 0) return; 
+    this.heldTime = heldTime;
+  }
 }

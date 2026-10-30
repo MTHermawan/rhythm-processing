@@ -8,5 +8,9 @@ application.windows32
 application.windows64
 application.macosx
 out
+windows-amd64
 
-/assets/songs
+frames (deprecated)
+/data/songs/3_monitoring
+/data/songs/4_usagi_flap
+settings.txt

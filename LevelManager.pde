@@ -1,23 +1,24 @@
-void LoadLevel(String songName) {
+void LoadLevel(Song selectSong) {
+  selectedSong = selectSong;
 
-  println("PLAY clicked: " + songName);
+  if (selectedSong.isValid()) {
+    println("PLAY clicked: " + selectedSong.title);
+    println("Starting ResetGameplay");
+    ResetGameplay();
+    println("ResetGameplay completed");
 
-  selectedSong = songName;
+    levelStartTime = time;
+    menuState = "level";
 
-  println("Starting ResetGameplay");
-  ResetGameplay();
-  println("ResetGameplay completed");
-
-  levelStartTime = time;
-  menuState = "level";
-
-  println("Entering gameplay");
+    println("Entering gameplay");
+    SetupMV();
+  }
 }
 
 void ResetGameplay() {
 
-  if (song != null && song.isPlaying()) {
-    song.stop();
+  if (selectedSong.sound != null && selectedSong.sound.isPlaying()) {
+    selectedSong.sound.stop();
   }
 
   if (guideSound != null && guideSound.isPlaying()) {
@@ -56,16 +57,16 @@ void ResetGameplay() {
   guideTimeSize = 0;
 
   if (guideSound != null) guideSound.amp(sfxVolume / 100);
-  
-  chartManager.SetupChart(selectedSong);
+
+  chartManager.SetupChart();
 }
 
 
 void ReturnToMainMenu() {
 
   // Hentikan lagu hanya jika sedang diputar
-  if (song != null && song.isPlaying()) {
-    song.stop();
+  if (selectedSong.sound != null && selectedSong.sound.isPlaying()) {
+    selectedSong.sound.stop();
   }
 
   // Hentikan guide sound hanya jika sedang diputar
@@ -85,10 +86,10 @@ void ReturnToMainMenu() {
 }
 
 void DrawBeatLines(float gap, float judgmentMargin, float chartSpeed) {
-  if (songBpm <= 0) return;
+  if (selectedSong.bpm <= 0) return;
 
   float pxPerSec  = chartSpeed * 100;           // sama dengan rumus posisi not
-  float beatTime  = 60.0 / songBpm;
+  float beatTime  = 60.0 / selectedSong.bpm;
   float firstTime = songOffset + chartManager.TotalOffset();  // beat ke-0 (sudah termasuk offset not)
 
   float leftX  = -150 - (gap / 2);
@@ -119,18 +120,19 @@ void DrawBeatLines(float gap, float judgmentMargin, float chartSpeed) {
 
 void LevelManager() {
   background(0);
+  if (backgroundMV == null) drawImageFit(selectedSong.coverArt, 0, 0, width, height);
 
   if (time > (levelStartTime + preparationTime))
   {
     if (time > (mvStartPause + mvPauseDuration))
     {
-      PlayMV(selectedSong);
+      PlayMV();
     }
 
-    if (!songStarted)
+    if (!songStarted && selectedSong.sound != null)
     {
-      song.play();
-      song.amp(musicVolume / 100);
+      selectedSong.sound.play();
+      selectedSong.sound.amp(musicVolume / 100);
       songStarted = true;
     }
   }
@@ -253,11 +255,11 @@ void LevelManager() {
   popMatrix();
 
   judgmentManager.ShowJudgmentInfo();
-
+  
   if (songStarted &&
-      songDuration > 1 &&
-      !song.isPlaying() &&
-      !songEnded) {
+    songDuration > 1 &&
+    !selectedSong.sound.isPlaying() &&
+    !songEnded) {
 
     songEnded = true;
 
@@ -270,7 +272,7 @@ void LevelManager() {
     println("Max Combo: " + maxCombo);
 
     resultScreen.startAnimation();
-  
+
     menuState = "result";
   }
 }

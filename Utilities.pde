@@ -54,3 +54,36 @@ void ChartGuide() {
     guideTimes[i][1] = 1;
   }
 }
+
+public File GetDataFile(String subDir) {
+    return new File(dataPath(subDir));
+}
+
+public String[] GetDataDirList(String subDir) {
+  return GetDataFile(subDir).list();
+}
+
+void drawImageFit(PImage img, float x, float y, float w, float h) {
+  float s = min(w / img.width, h / img.height);
+  float dw = img.width * s;
+  float dh = img.height * s;
+  image(img, x + (w - dw) / 2, y + (h - dh) / 2, dw, dh);
+}
+
+void drawImageCover(PImage img, float x, float y, float w, float h) {
+  float boxRatio = w / h;
+  float imgRatio = (float) img.width / img.height;
+
+  float sw = img.width, sh = img.height;
+  float sx = 0, sy = 0;
+
+  if (imgRatio > boxRatio) {
+    sw = img.height * boxRatio;
+    sx = (img.width - sw) / 2;
+  } else {
+    sh = img.width / boxRatio;
+    sy = (img.height - sh) / 2;
+  }
+
+  image(img, x, y, w, h, (int) sx, (int) sy, (int) (sx + sw), (int) (sy + sh));
+}

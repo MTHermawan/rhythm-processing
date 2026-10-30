@@ -9,11 +9,6 @@ class ResultScreen {
     animationStartMillis = millis();
   }
 
-
-  void loadAssets() {
-    songCover = loadImage(songPath + "bad_apple/cover.jpg");
-  }
-
   void display() {
     pushStyle();
 
@@ -98,8 +93,8 @@ class ResultScreen {
     fill(22, 35, 53);
     rect(48, 168, 200, 200, 14);
 
-    if (songCover != null) {
-      image(songCover, 58, 178, 180, 180);
+    if (selectedSong.coverArt != null) {
+      image(selectedSong.coverArt, 58, 178, 180, 180);
     }
 
     fill(20, 31, 49);

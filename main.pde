@@ -1,29 +1,31 @@
 import processing.sound.*;
+import processing.video.*;
 
 // Song Stuff
-String selectedSong = "bad_apple";
+Song selectedSong = null;
 float songStartTime = 0;
 float songTime = 0;
-float songBpm = 0;
 float songOffset = 0;   // detik sampai beat ke-0
 float musicVolume = 60;
-SoundFile song;
-String songPath = "assets/songs/";
+String songPath = "data/songs/";
+Movie backgroundMV = null;
+RhythmNote[] charts = new RhythmNote[9999]; // {Line Index, Judgment Time, Hold Duration}
+int chartSize = 0;
+Song[] songList = null;
 
-// Application Timing
+// General App Data
 float startTime;
 float time;
+boolean settedUp = false;
 
 // Level Timing
 float levelStartTime = 0;
 float preparationTime = 3;
 float songDuration = 0;
-RhythmNote[] charts = new RhythmNote[9999]; // {Line Index, Judgment Time, Hold Duration}
-int chartSize = 0;
 float[][] guideTimes = new float[9999][2];
 int guideTimeSize = 0;
 SoundFile guideSound;
-String sfxPath = "assets/sfx/";
+String sfxPath = "data/sfx/";
 
 // Judgment
 int[] currentJudgment = new int[4];
@@ -69,27 +71,55 @@ MenuScreen menuScreen = new MenuScreen();
 JudgmentManager judgmentManager = new JudgmentManager();
 ResultScreen resultScreen = new ResultScreen();
 
+SoundFile soundTest = null;
+
 void setup()
 {
   size(800, 600);
+  LoadingScreen();
+}
+
+void DelayedSetup() {
+  if (settedUp) return;
+  settedUp = true;
+  
   LoadSettings();
   startTime = millis();
-  song = new SoundFile(this, songPath + "bad_apple" + "/bgm.mp3");
+  backgroundMV = new Movie(this, "placeholder.mp4");
   guideSound = new SoundFile(this, sfxPath + "clap-lowerdb.mp3");
-  background(0);
-  resultScreen.loadAssets();
+  songList = GetAllSongData();
 
   for (int i=0; i < gameInput.length; i++) {
     gameInput[i] = false;
   }
   
   guideSound.amp(sfxVolume / 100);
-  chartManager.SetupChart(selectedSong);
+  
+  soundTest = new SoundFile(this, "data/songs/1_bad_apple/bgm.mp3");
+  soundTest.amp(1);
+}
+
+void LoadingScreen() {
+  background(10);
+  pushMatrix();
+  translate(width/2, height/2);
+  
+  color(#ffffff);
+  textSize(46);
+  textAlign(CENTER, CENTER);
+  text("Loading...", 0, 0);
+}
+
+void movieEvent(Movie m) {
+  m.read();
 }
 
 void draw()
 {
   time = (millis() - startTime) / 1000;
+  if (time < 0.2) return;
+  DelayedSetup();
+  if (time < 1 && settedUp) return;
 
   // MainMenu -> Level -> Score Result -> MainMenu
   if (menuState.compareToIgnoreCase("mainmenu") == 0)
@@ -105,8 +135,12 @@ void draw()
     resultScreen.display();
   }
 
-  if (menuState.equalsIgnoreCase("level")) {
-  MouseCoordinate();
+  if (menuState.equalsIgnoreCase("level") || menuState.equalsIgnoreCase("mainmenu")) {
+    MouseCoordinate();
+  }
+  
+  if (songStarted) {
+    songDuration = time - (levelStartTime + preparationTime);
   }
 
   totalScore = (currentJudgment[0] * perfectScore) + (currentJudgment[1] * greatScore) + (currentJudgment[2] * goodScore);
