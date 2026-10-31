@@ -84,7 +84,7 @@ class ResultScreen {
 
     fill(160, 175, 195);
     textSize(16);
-    text("Bad Apple!!  |  138 BPM", 48, 116);
+    text(selectedSong.title + "  |  " + selectedSong.bpm, 48, 116);
 
     stroke(45, 62, 85);
     line(48, 150, 752, 150);

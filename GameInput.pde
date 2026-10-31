@@ -47,6 +47,13 @@ void keyPressed() {
         }
       }
     }
+    
+    if (key == 'r' || key == 'R') {
+      LoadLevel(selectedSong);
+    }
+    if (key == 'q' || key == 'q') {
+      ReturnToMainMenu();
+    }
   }
 }
 
@@ -65,13 +72,13 @@ void keyReleased() {
         charts[i].heldTime = songDuration - charts[i].hitTime;
         float holdJudgment = charts[i].heldTime / charts[i].holdDuration;
         print(holdJudgment);
-        if (holdJudgment >= 0.35) {
-          if (holdJudgment >= 0.90) {
+        if (holdJudgment >= 0.25) {
+          if (holdJudgment >= 0.85) {
             // Perfect Hold
             currentJudgment[0]++;
             charts[i].state = 1;
             judgmentManager.SetJudgmentInfo("Perfect");
-          } else if (holdJudgment >= 0.65) {
+          } else if (holdJudgment >= 0.6) {
             // Great Hold
             currentJudgment[1]++;
             charts[i].state = 3;

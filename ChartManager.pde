@@ -16,17 +16,17 @@ class ChartManager {
       }
     }
 
-    for (int i = 0; i < 470; i += 2)
-    {
-      int phase = ((i + 4) / 2) % 4;
-      int a = (phase == 2) ? 0 : (phase == 3) ? 1 : (phase == 0) ? 2 : 3;
-      int b = (a + 2) % 4;
+    //for (int i = 0; i < 470; i += 2)
+    //{
+    //  int phase = ((i + 4) / 2) % 4;
+    //  int a = (phase == 2) ? 0 : (phase == 3) ? 1 : (phase == 0) ? 2 : 3;
+    //  int b = (a + 2) % 4;
 
-      AddBeat(i, a, 1);       // hold 1 beat
-      AddBeat(i, b, 0);
-      AddBeat(i + 1, b, 0);
-      println("a");
-    }
+    //  AddBeat(i, a, 1);       // hold 1 beat
+    //  AddBeat(i, b, 0);
+    //  AddBeat(i + 1, b, 0);
+    //  println("a");
+    //}
 
     RecalculateFullCombo();
 

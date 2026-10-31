@@ -128,6 +128,7 @@ void LevelManager() {
     {
       PlayMV();
     }
+    ShowDurationDebug();
 
     if (!songStarted && selectedSong.sound != null)
     {
@@ -255,7 +256,7 @@ void LevelManager() {
   popMatrix();
 
   judgmentManager.ShowJudgmentInfo();
-  
+
   if (songStarted &&
     songDuration > 1 &&
     !selectedSong.sound.isPlaying() &&
@@ -275,4 +276,11 @@ void LevelManager() {
 
     menuState = "result";
   }
+}
+
+void ShowDurationDebug() {
+  int second = (int)songDuration % 60;
+  int minute = (int)songDuration / 60;
+  if (minute > 0) text("Duration: " + minute + "m:" + second + "s", 8, 28);
+  else text("Duration: " + second + "s", 8, 28);
 }

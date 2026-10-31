@@ -17,7 +17,6 @@ boolean PlayMV()
   }
 
   drawImageFit(backgroundMV, 0, 0, width, height);
-  return true;
 
   //PImage mvFrameImg = null;
   //float fps = 30.0;
@@ -52,11 +51,6 @@ boolean PlayMV()
   //  textAlign(LEFT, TOP);
   //  text("Frame: " + frameNumber + "/" + maxFrame, 8, 8);
 
-  //  int second = (int)songDuration % 60;
-  //  int minute = (int)songDuration / 60;
-  //  if (minute > 0) text("Duration: " + minute + "m:" + second + "s", 8, 28);
-  //  else text("Duration: " + second + "s", 8, 28);
-
   //  text("Perfect: " + currentJudgment[0], 8, 68);
   //  text("Great: " + currentJudgment[1], 8, 88);
   //  text("Good: " + currentJudgment[2], 8, 108);
@@ -86,4 +80,5 @@ boolean PlayMV()
   //  fill(255, 255 * 0.65);
   //  rect(0, 0, width * songProgress, 5);
   //} else background(0);
+  return true;
 }
