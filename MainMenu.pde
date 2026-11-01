@@ -50,6 +50,11 @@ void mouseClicked()
     return;
   }
 
+  if (menuState.equalsIgnoreCase("gameover")) {
+    gameOverSystem.handleClick();
+    return;
+  }
+
   if (!menuState.equalsIgnoreCase("mainmenu")) {
     return;
   }

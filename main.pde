@@ -129,6 +129,11 @@ void draw()
   else if (menuState.compareToIgnoreCase("level") == 0)
   {
     LevelManager();
+    gameOverSystem.update();
+  }
+  else if (menuState.compareToIgnoreCase("gameover") == 0)
+  {
+    gameOverSystem.display();
   }
   else if (menuState.compareToIgnoreCase("result") == 0)
   {
