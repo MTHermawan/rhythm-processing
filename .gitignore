@@ -12,5 +12,5 @@ windows-amd64
 
 frames (deprecated)
 /data/songs/3_monitoring
-/data/songs/4_usagi_flap
-settings.txt
+# /data/songs/4_usagi_flap
+# settings.txt
