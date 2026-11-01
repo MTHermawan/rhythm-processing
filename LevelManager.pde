@@ -104,6 +104,8 @@ void LevelManager() {
 
     if (!songStarted && selectedSong.sound != null)
     {
+      selectedSong.sound.stop();
+      selectedSong.sound.cue(0);   // library menyimpan posisi mulai; pastikan dari awal lagu
       selectedSong.sound.play();
       selectedSong.sound.amp(musicVolume / 100);
       songStarted = true;
@@ -127,6 +129,7 @@ void LevelManager() {
   if (songStarted &&
     songDuration > 1 &&
     !selectedSong.sound.isPlaying() &&
+    !pauseSystem.recentlyResumed() &&
     songEndTime < 0) {
     songEndTime = time;
   }

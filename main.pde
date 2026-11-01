@@ -131,6 +131,10 @@ void draw()
     LevelManager();
     gameOverSystem.update();
   }
+  else if (menuState.compareToIgnoreCase("pause") == 0 || menuState.compareToIgnoreCase("pausecount") == 0)
+  {
+    pauseSystem.display();
+  }
   else if (menuState.compareToIgnoreCase("gameover") == 0)
   {
     gameOverSystem.display();

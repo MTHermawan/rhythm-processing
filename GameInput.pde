@@ -1,5 +1,6 @@
 void keyPressed() {
   if (HandleRebindKey()) return;
+  if (pauseSystem.handleKey()) return;
 
   if (menuState.compareToIgnoreCase("level") == 0) {
     // Judgment Handler / Hit
@@ -58,6 +59,7 @@ void keyPressed() {
 }
 
 void keyReleased() {
+  if (pauseSystem.handleKeyRelease()) return;
   if (menuState.compareToIgnoreCase("level") == 0) {
     // Judgment Handler
     int lineIndex = LaneFromKey(key);

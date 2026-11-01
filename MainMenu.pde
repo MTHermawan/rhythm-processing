@@ -50,6 +50,11 @@ void mouseClicked()
     return;
   }
 
+  if (pauseSystem.isPaused()) {
+    pauseSystem.handleClick();
+    return;
+  }
+
   if (menuState.equalsIgnoreCase("gameover")) {
     gameOverSystem.handleClick();
     return;
