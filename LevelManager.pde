@@ -1,3 +1,6 @@
+float songEndTime = -1;
+float resultDelay = 3;
+
 void LoadLevel(Song selectSong) {
   selectedSong = selectSong;
 
@@ -260,7 +263,11 @@ void LevelManager() {
   if (songStarted &&
     songDuration > 1 &&
     !selectedSong.sound.isPlaying() &&
-    !songEnded) {
+    songEndTime < 0) {
+    songEndTime = time;
+  }
+
+  if (songEndTime >= 0 && !songEnded && time > songEndTime + resultDelay) {
 
     songEnded = true;
 
