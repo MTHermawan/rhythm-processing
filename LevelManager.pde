@@ -30,6 +30,7 @@ void ResetGameplay() {
 
   songStarted = false;
   songEnded = false;
+  songEndTime = -1;
 
   for (int i = 0; i < currentJudgment.length; i++) {
     currentJudgment[i] = 0;

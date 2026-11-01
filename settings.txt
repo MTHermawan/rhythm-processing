@@ -1,6 +1,6 @@
 musicVolume=30.0
 sfxVolume=60.0
-musicOffsetMs=80.0
+musicOffsetMs=40.0
 scrollSpeed=12.0
 bgDim=65.0
 keys=df;'
